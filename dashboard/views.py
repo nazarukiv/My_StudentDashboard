@@ -6,9 +6,6 @@ from .models import Task
 
 
 def home(request):
-    return HttpResponse("My Student Dashboard is working.")
-
-def home(request):
     college_tasks = Task.objects.filter(category='college').order_by('due_date')
     study_tasks = Task.objects.filter(category='study').order_by('due_date')
     fitness_tasks = Task.objects.filter(category='fitness').order_by('due_date')
@@ -28,3 +25,17 @@ def add_task(request):
     else:
         form = TaskForm()
     return render(request, 'dashboard/add_task.html', {'form': form})
+
+from django.shortcuts import render
+
+def about(request):
+    return render(request, 'dashboard/about.html')
+
+def projects(request):
+    return render(request, 'dashboard/projects.html')
+
+def contact(request):
+    return render(request, 'dashboard/contact.html')
+
+def settings(request):
+    return render(request, 'dashboard/settings.html')
