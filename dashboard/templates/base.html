@@ -46,6 +46,17 @@
         <a href="{% url 'projects' %}">💻 Projects</a>
         <a href="{% url 'contact' %}">📬 Contact</a>
         <a href="{% url 'settings' %}">⚙️ Settings</a>
+        <hr>
+        {% if user.is_authenticated %}
+            <p>👋 Hello, {{ user.username }}</p>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-light border btn-sm mt-3">🔒 Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">🔐 Login</a>
+            <a href="{% url 'register' %}">📝 Register</a>
+        {% endif %}
     </div>
     <div class="main">
         {% block content %}{% endblock %}
