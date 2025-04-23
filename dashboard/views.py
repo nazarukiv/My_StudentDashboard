@@ -1,30 +1,40 @@
+from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .forms import TaskForm
 from .models import Task
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def home(request):
-    college_tasks = Task.objects.filter(category='college').order_by('due_date')
-    study_tasks = Task.objects.filter(category='study').order_by('due_date')
-    fitness_tasks = Task.objects.filter(category='fitness').order_by('due_date')
+    user = request.user
+    college_tasks = Task.objects.filter(user=user, category='college')
+    study_tasks = Task.objects.filter(user=user, category='study')
+    fitness_tasks = Task.objects.filter(user=user, category='fitness')
 
-    return render(request, 'dashboard/home.html', {
+    today = timezone.now().date()
+    return render(request, 'home.html', {
         'college_tasks': college_tasks,
         'study_tasks': study_tasks,
         'fitness_tasks': fitness_tasks,
+        'today': today,
     })
 
+@login_required
 def add_task(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save(commit=False)
+            task.user = request.user  # assign to current user
+            task.save()
             return redirect('home')
     else:
         form = TaskForm()
-    return render(request, 'dashboard/add_task.html', {'form': form})
+
+    return render(request, 'add_task.html', {'form': form})
 
 from django.shortcuts import render
 

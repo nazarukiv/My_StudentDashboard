@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 class Task(models.Model):
     CATEGORY_CHOICES = [
@@ -9,6 +8,7 @@ class Task(models.Model):
         ('fitness', 'Fitness'),
     ]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # link to the user
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     due_date = models.DateField()
