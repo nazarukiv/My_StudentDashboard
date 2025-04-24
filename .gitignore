@@ -1,0 +1,65 @@
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Migrations
+**/migrations/
+
+# Environment
+venv/
+env/
+ENV/
+.venv/
+
+# macOS
+.DS_Store
+
+# Tests
+coverage/
+htmlcov/
+*.cover
+*.py,cover
+.cache
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pytest
+.pytest_cache/
+
+# Pipenv
+Pipfile.lock
+
+# Celery
+celerybeat-schedule
+
+# Docker
+*.pid
+*.sock
+
+# Others
+*.sqlite3
+
