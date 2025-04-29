@@ -1,10 +1,11 @@
 from django.utils import timezone
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
-from .forms import TaskForm
-from .models import Task
+from .forms import TaskForm, NoteForm, GradeForm
+from .models import Task, Note, Grade
 from django.contrib.auth.decorators import login_required
+
 
 
 @login_required
@@ -49,3 +50,60 @@ def contact(request):
 
 def settings(request):
     return render(request, 'dashboard/settings.html')
+
+@login_required
+def note_list(request):
+    notes = Note.objects.filter(user=request.user)
+    return render(request, 'dashboard/notes_list.html', {'notes': notes})
+
+@login_required
+def note_create(request):
+    if request.method == 'POST':
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+            return redirect('notes')
+    else:
+        form = NoteForm()
+    return render(request, 'dashboard/note_form.html', {'form': form})
+
+@login_required
+def note_update(request, pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = NoteForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            return redirect('notes')
+    else:
+        form = NoteForm(instance=note)
+    return render(request, 'dashboard/note_form.html', {'form': form})
+
+@login_required
+def note_delete(request, pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+    if request.method == 'POST':
+        note.delete()
+        return redirect('notes')
+    return render(request, 'dashboard/note_confirm_delete.html', {'note': note})
+
+
+@login_required
+def grade_list(request):
+    grades = Grade.objects.filter(user=request.user).order_by('subject')
+    return render(request, 'dashboard/grades_list.html', {'grades': grades})
+
+@login_required
+def grade_create(request):
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            grade = form.save(commit=False)
+            grade.user = request.user
+            grade.save()
+            return redirect('grade_list')
+    else:
+        form = GradeForm()
+    return render(request, 'dashboard/grade_form.html', {'form': form})

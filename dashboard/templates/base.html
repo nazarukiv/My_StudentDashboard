@@ -42,10 +42,12 @@
     <div class="sidebar">
         <h2>📘 Dashboard</h2>
         <a href="{% url 'home' %}">🏠 Home</a>
+        <a href="{% url 'notes' %}">📝 Notes</a>
+        <a href="{% url 'grade_list' %}">📊 Grades</a>
+        <a href="{% url 'settings' %}">⚙️ Settings</a>
         <a href="{% url 'about' %}">👤 About Me</a>
         <a href="{% url 'projects' %}">💻 Projects</a>
         <a href="{% url 'contact' %}">📬 Contact</a>
-        <a href="{% url 'settings' %}">⚙️ Settings</a>
         <hr>
         {% if user.is_authenticated %}
             <p>👋 Hello, {{ user.username }}</p>

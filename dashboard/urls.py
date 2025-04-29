@@ -8,4 +8,10 @@ urlpatterns = [
     path('projects/', views.projects, name='projects'),
     path('contact/', views.contact, name='contact'),
     path('settings/', views.settings, name='settings'),
+    path('notes/', views.note_list, name='notes'),
+    path('notes/create/', views.note_create, name='note_create'),
+    path('notes/<int:pk>/edit/', views.note_update, name='note_edit'),
+    path('notes/<int:pk>/delete/', views.note_delete, name='note_delete'),
+    path('grades/', views.grade_list, name='grade_list'),
+    path('grades/add/', views.grade_create, name='grade_add'),
 ]

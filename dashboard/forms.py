@@ -1,5 +1,6 @@
 from django import forms
-from .models import Task
+from .models import Task, Grade
+
 
 class TaskForm(forms.ModelForm):
     class Meta:
@@ -11,4 +12,23 @@ class TaskForm(forms.ModelForm):
             'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'is_completed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+from django import forms
+from .models import Note
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'body']
+
+
+class GradeForm(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ['subject', 'assignment', 'grade']
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control'}),
+            'assignment': forms.TextInput(attrs={'class': 'form-control'}),
+            'grade': forms.TextInput(attrs={'class': 'form-control'}),
         }

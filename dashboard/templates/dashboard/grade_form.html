@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Add Grade{% endblock %}
+{% block content %}
+<h1 class="mb-4">➕ Add Grade</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success mt-2" type="submit">Save</button>
+</form>
+{% endblock %}

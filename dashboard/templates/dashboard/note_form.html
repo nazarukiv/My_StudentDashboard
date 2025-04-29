@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}New Note{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Note</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success" type="submit">Save</button>
+    <a href="{% url 'notes' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Grades{% endblock %}
+{% block content %}
+<h1 class="mb-4">📊 My Grades</h1>
+<a href="{% url 'grade_add' %}" class="btn btn-primary mb-3">Add Grade</a>
+
+{% for grade in grades %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <strong>{{ grade.subject }}</strong> — {{ grade.assignment }}:
+            <span class="badge bg-success">{{ grade.grade }}</span>
+        </div>
+    </div>
+{% empty %}
+    <p>No grades recorded yet.</p>
+{% endfor %}
+{% endblock %}
