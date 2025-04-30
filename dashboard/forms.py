@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task, Grade
+from .models import Task, Grade, Pomodoro
 
 
 class TaskForm(forms.ModelForm):
@@ -32,3 +32,9 @@ class GradeForm(forms.ModelForm):
             'assignment': forms.TextInput(attrs={'class': 'form-control'}),
             'grade': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class PomodoroForm(forms.ModelForm):
+    class Meta:
+        model = Pomodoro
+        fields = ['task_name', 'duration_minutes']

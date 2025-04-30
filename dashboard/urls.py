@@ -14,4 +14,6 @@ urlpatterns = [
     path('notes/<int:pk>/delete/', views.note_delete, name='note_delete'),
     path('grades/', views.grade_list, name='grade_list'),
     path('grades/add/', views.grade_create, name='grade_add'),
+    path('pomodoros/', views.pomodoro_list, name='pomodoro_list'),
+    path('pomodoros/new/', views.pomodoro_create, name='pomodoro_create'),
 ]

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Pomodoro Tracker{% endblock %}
+
+{% block content %}
+<h1>🍅 Pomodoro Sessions</h1>
+<a href="{% url 'pomodoro_create' %}" class="btn btn-primary mb-3">+ New Pomodoro</a>
+
+{% for p in pomodoros %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <strong>{{ p.task_name }}</strong><br>
+            Duration: {{ p.duration_minutes }} min<br>
+            Completed at: {{ p.completed_at|date:"M d, Y H:i" }}
+        </div>
+    </div>
+{% empty %}
+    <p>No Pomodoro sessions yet.</p>
+{% endfor %}
+{% endblock %}

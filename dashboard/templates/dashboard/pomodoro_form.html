@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}New Pomodoro{% endblock %}
+
+{% block content %}
+<h1>🍅 Start New Pomodoro</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Start</button>
+</form>
+{% endblock %}

@@ -2,8 +2,8 @@ from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
-from .forms import TaskForm, NoteForm, GradeForm
-from .models import Task, Note, Grade
+from .forms import TaskForm, NoteForm, GradeForm, PomodoroForm
+from .models import Task, Note, Grade, Pomodoro
 from django.contrib.auth.decorators import login_required
 
 
@@ -107,3 +107,21 @@ def grade_create(request):
     else:
         form = GradeForm()
     return render(request, 'dashboard/grade_form.html', {'form': form})
+
+@login_required
+def pomodoro_list(request):
+    pomodoros = Pomodoro.objects.filter(user=request.user).order_by('-completed_at')
+    return render(request, 'dashboard/pomodoro_list.html', {'pomodoros': pomodoros})
+
+@login_required
+def pomodoro_create(request):
+    if request.method == 'POST':
+        form = PomodoroForm(request.POST)
+        if form.is_valid():
+            pomodoro = form.save(commit=False)
+            pomodoro.user = request.user
+            pomodoro.save()
+            return redirect('pomodoro_list')
+    else:
+        form = PomodoroForm()
+    return render(request, 'dashboard/pomodoro_form.html', {'form': form})
